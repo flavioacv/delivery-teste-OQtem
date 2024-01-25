@@ -125,15 +125,14 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   }
 
   Widget buildBody() {
-    return Container(
+    return SizedBox(
       width: context.screenSize.width,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 60,
-      ),
+
       // color: context.appColors.white,
       child: Column(
         children: [
           buildTap(),
+          buildListOrder(),
         ],
       ),
     );
@@ -149,12 +148,52 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
           TabBar(
             padding: const EdgeInsets.only(top: 50),
             controller: controller,
+            isScrollable: true,
+            labelPadding: const EdgeInsets.only(right: 100, left: 12),
             indicatorSize: TabBarIndicatorSize.label,
             dividerColor: Colors.transparent,
             indicatorColor: context.appColors.orange,
             tabs: myTabs,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildListOrder() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 60, right: 60, top: 50),
+      child: SizedBox(
+        height: context.screenSize.height * 0.7,
+        width: context.screenSize.width,
+        child: ListenableBuilder(
+          listenable: controller!,
+          builder: (context, _) {
+            print('${controller!.index}AUQIUIIIIII');
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                print(controller!.index.toString());
+                return Container(
+                  height: 180,
+                  margin: const EdgeInsets.only(bottom: 50),
+                  padding: const EdgeInsets.only(left: 45, right: 45, top: 60),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            spreadRadius: 4,
+                            blurRadius: 10)
+                      ],
+                      borderRadius: BorderRadius.circular(8)),
+                  child: const SizedBox(),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
