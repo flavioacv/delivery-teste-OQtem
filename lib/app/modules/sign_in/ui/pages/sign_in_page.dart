@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teste_delivery/app/core/constants/locales/sign_in_locales.dart';
+import 'package:teste_delivery/app/core/constants/routes/app_routes.dart';
+import 'package:teste_delivery/app/core/navigation/navigation_service.dart';
 import 'package:teste_delivery/app/core/themes/extensions/color_theme_extension.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
 
@@ -80,7 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                                     radius: 10,
                                   ),
                                 ),
-                                hintText: 'E-mail',
+                                hintText: SignInLocales.email,
                                 hintStyle: GoogleFonts.roboto(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -126,7 +129,7 @@ class _SignInPageState extends State<SignInPage> {
                                     radius: 10,
                                   ),
                                 ),
-                                hintText: 'Senha',
+                                hintText: SignInLocales.pass,
                                 hintStyle: GoogleFonts.roboto(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -149,7 +152,12 @@ class _SignInPageState extends State<SignInPage> {
                         SizedBox(
                           width: context.screenSize.width,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              NavigationService.pushReplacementNamed(
+                                context: context,
+                                route: AppRoutes.orderRoute,
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: context.appColors.orangeDark,
                               shape: RoundedRectangleBorder(
@@ -164,7 +172,7 @@ class _SignInPageState extends State<SignInPage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   TextWidget(
-                                    'Concluído',
+                                    SignInLocales.enter,
                                     colorText: context.appColors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -180,7 +188,7 @@ class _SignInPageState extends State<SignInPage> {
                         InkWell(
                           onTap: () {},
                           child: Text(
-                            'Esqueci a senha',
+                            SignInLocales.resetPass,
                             style: GoogleFonts.roboto(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,

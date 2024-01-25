@@ -1,3 +1,3 @@
 class AppLocales {
-  static const String eleven = 'Login';
+  static const String login = 'Login';
 }
