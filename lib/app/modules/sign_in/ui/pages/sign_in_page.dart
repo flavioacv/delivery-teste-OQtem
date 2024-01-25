@@ -177,12 +177,15 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(
                           height: 30,
                         ),
-                        Text(
-                          'Esqueci a senha',
-                          style: GoogleFonts.roboto(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: context.appColors.grey),
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'Esqueci a senha',
+                            style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: context.appColors.grey),
+                          ),
                         )
                       ],
                     ),
