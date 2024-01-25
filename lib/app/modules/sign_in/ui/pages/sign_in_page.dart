@@ -38,7 +38,10 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/logo/oqtem-logo.svg'),
+                  Hero(
+                    tag: "HeroOne",
+                    child: SvgPicture.asset('assets/logo/oqtem-logo.svg'),
+                  ),
                   const SizedBox(
                     height: 60,
                   ),
