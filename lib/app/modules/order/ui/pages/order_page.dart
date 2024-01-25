@@ -169,25 +169,24 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
         child: ListenableBuilder(
           listenable: controller!,
           builder: (context, _) {
-            print('${controller!.index}AUQIUIIIIII');
             return ListView.builder(
               shrinkWrap: true,
               itemCount: 5,
               itemBuilder: (context, index) {
-                print(controller!.index.toString());
                 return Container(
                   height: 180,
                   margin: const EdgeInsets.only(bottom: 50),
                   padding: const EdgeInsets.only(left: 45, right: 45, top: 60),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
-                      borderRadius: BorderRadius.circular(8)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          spreadRadius: 4,
+                          blurRadius: 10)
+                    ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   child: const SizedBox(),
                 );
               },
