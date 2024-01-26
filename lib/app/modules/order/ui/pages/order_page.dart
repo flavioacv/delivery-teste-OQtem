@@ -1,107 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:teste_delivery/app/core/service/formatters/date_string_formatters.dart';
+import 'package:teste_delivery/app/core/service/snack_bar/snack_bar.dart';
 import 'package:teste_delivery/app/core/themes/extensions/color_theme_extension.dart';
+import 'package:teste_delivery/app/core/themes/extensions/responsive_extension.dart';
+import 'package:teste_delivery/app/core/widgets/shimmer_loading_widget.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
+import 'package:teste_delivery/app/modules/order/interactor/controllers/order_controller.dart';
+import 'package:teste_delivery/app/modules/order/interactor/models/order_model.dart';
+import 'package:teste_delivery/app/modules/order/interactor/state/order_state.dart';
 import 'package:teste_delivery/app/modules/order/ui/widgets/dropdown_button_widget.dart';
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({super.key});
+  final OrderController orderController;
+  const OrderPage({super.key, required this.orderController});
 
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
 
+const List<String> list = <String>[
+  'Todos',
+  'Recebido',
+  'Em preparo',
+  'Concluido',
+  'Recusados'
+];
+
 class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   TabController? controller;
-  final List<Tab> myTabs = <Tab>[
-    const Tab(
-      child: TextWidget(
-        'Todos',
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-    const Tab(
-      child: TextWidget(
-        'Recebido',
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-    const Tab(
-      child: TextWidget(
-        'Em preparo',
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-    const Tab(
-      child: TextWidget(
-        'Concluído',
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-    const Tab(
-      child: TextWidget(
-        'Recusados',
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-  ];
+  final List<Tab> myTabs = list
+      .map((e) => Tab(
+            child: TextWidget(
+              e,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ))
+      .toList();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    widget.orderController.order.addListener(listener);
+    widget.orderController.getOrders();
     controller = TabController(length: myTabs.length, vsync: this);
+  }
+
+  void listener() {
+    final order = widget.orderController.order.value;
+    if (order is OrderFailure) {
+      SnackBarService.showError(
+        context: context,
+        message: order.appException!.message,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20, right: 8),
-        child: InkWell(
-          onTap: () async {},
-          child: Stack(
-            children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundColor: context.appColors.grey,
-                child: SvgPicture.asset(
-                  'assets/icons/message-circle.svg',
-                  width: 30,
-                  height: 30,
+    return ValueListenableBuilder(
+        valueListenable: widget.orderController.order,
+        builder: (context, state, __) {
+          return Scaffold(
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(bottom: 20, right: 8),
+              child: InkWell(
+                onTap: () async {},
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: context.appColors.grey,
+                      child: SvgPicture.asset(
+                        'assets/icons/message-circle.svg',
+                        width: 30,
+                        height: 30,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: CircleAvatar(
+                        radius: 10,
+                        backgroundColor: context.appColors.white,
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Positioned(
-                right: 0,
-                top: 0,
-                child: CircleAvatar(
-                  radius: 10,
-                  backgroundColor: context.appColors.white,
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      body: Container(
-        color: context.appColors.whiteOrange,
-        width: context.screenSize.width,
-        height: context.screenSize.height,
-        child: Column(
-          children: [
-            buildHeader(),
-            buildBody(),
-          ],
-        ),
-      ),
-    );
+            ),
+            body: Container(
+              color: context.appColors.whiteOrange,
+              width: context.screenSize.width,
+              height: context.screenSize.height,
+              child: Column(
+                children: [
+                  buildHeader(state),
+                  buildBody(state),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
-  Widget buildHeader() {
+  Widget buildHeader(OrderState state) {
     return Container(
       width: context.screenSize.width,
       height: 84,
@@ -152,21 +156,21 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget buildBody() {
+  Widget buildBody(OrderState state) {
     return SizedBox(
       width: context.screenSize.width,
 
       // color: context.appColors.white,
       child: Column(
         children: [
-          buildTap(),
-          buildListOrder(),
+          buildTap(state),
+          buildListOrder(state),
         ],
       ),
     );
   }
 
-  Widget buildTap() {
+  Widget buildTap(OrderState state) {
     return SizedBox(
       width: context.screenSize.width,
       height: 100,
@@ -188,29 +192,51 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget buildListOrder() {
+  Widget buildListOrder(OrderState state) {
     return Padding(
       padding: const EdgeInsets.only(left: 60, right: 60, top: 50),
       child: SizedBox(
         height: context.screenSize.height * 0.7,
         width: context.screenSize.width,
-        child: ListenableBuilder(
-          listenable: controller!,
-          builder: (context, _) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return buildTile();
-              },
-            );
-          },
+        child: RefreshIndicator(
+          onRefresh: () => widget.orderController.getOrders(),
+          child: ListenableBuilder(
+            listenable: controller!,
+            builder: (context, _) {
+              return ShimmerLoadingWidget(
+                showShimmer: state.isLoading,
+                heigthShimmer: 180.p,
+                itemShimmer: 2,
+                widthShimmer: context.screenSize.width,
+                radius: 8,
+                spaceItemBottom: 50,
+                padding: EdgeInsets.only(
+                  top: 40.0.h,
+                  bottom: 10.h,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.orders.length,
+                  itemBuilder: (context, index) {
+                    return Visibility(
+                      visible: state.orders[index].status ==
+                              list[controller!.index] ||
+                          controller!.index == 0,
+                      child: buildTile(
+                        state.orders[index],
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget buildTile() {
+  Widget buildTile(OrderModel order) {
     return Container(
       height: 180,
       margin: const EdgeInsets.only(bottom: 50),
@@ -234,8 +260,8 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const TextWidget(
-                  'Mariana Oliveira',
+                TextWidget(
+                  order.clientName,
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
@@ -244,8 +270,8 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                 ),
                 Row(
                   children: [
-                    const TextWidget(
-                      'Status do pedido Entregar até 12:30 Recebido 1x X Burger ZYX + 1x Batata média',
+                    TextWidget(
+                      'Status do pedido Entregar até ${DateStringFormatters.formatHours(order.deliveryDate)} ${order.status} ${order.orderName}',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -277,25 +303,31 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                 const SizedBox(
                   width: 10,
                 ),
-                const TextWidget(
-                  'Entregar até 12:30',
+                TextWidget(
+                  'Entregar até ${DateStringFormatters.formatHours(order.deliveryDate)}',
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
                 const SizedBox(
                   width: 80,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      TextWidget(
+                      const TextWidget(
                         'Status do pedido',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
-                      DropdownButtonWidget(),
+                      DropdownButtonWidget(
+                        value: order.status,
+                        onChanged: (value) {
+                          order.status = value;
+                          setState(() {});
+                        },
+                      ),
                     ],
                   ),
                 ),
