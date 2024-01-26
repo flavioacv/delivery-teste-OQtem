@@ -18,6 +18,7 @@ dependencies:
   flutter_modular: ^6.3.2
   google_fonts: ^6.1.0
   flutter_svg: ^2.0.9
+  flutter_spinkit: ^5.2.0
 
 dev_dependencies:
   flutter_test:
