@@ -60,6 +60,33 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 20, right: 8),
+        child: InkWell(
+          onTap: () async {},
+          child: Stack(
+            children: [
+              CircleAvatar(
+                radius: 40,
+                backgroundColor: context.appColors.grey,
+                child: SvgPicture.asset(
+                  'assets/icons/message-circle.svg',
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: CircleAvatar(
+                  radius: 10,
+                  backgroundColor: context.appColors.white,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
       body: Container(
         color: context.appColors.whiteOrange,
         width: context.screenSize.width,
@@ -280,4 +307,3 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
     );
   }
 }
-

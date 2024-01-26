@@ -29,6 +29,11 @@ class _SignInPageState extends State<SignInPage> {
               color: context.appColors.white,
               width: context.screenSize.width * 0.5,
               height: context.screenSize.height,
+              child: Center(
+                child: Image.asset(
+                  'assets/image/img.png',
+                ),
+              ),
             ),
             Container(
               color: context.appColors.orange,
