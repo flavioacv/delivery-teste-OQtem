@@ -11,6 +11,7 @@ class ShimmerLoadingWidget extends StatefulWidget {
   final double? radius;
   final EdgeInsetsGeometry? padding;
   final int itemShimmer;
+  final double? spaceItemBottom;
 
   const ShimmerLoadingWidget({
     required this.showShimmer,
@@ -20,6 +21,7 @@ class ShimmerLoadingWidget extends StatefulWidget {
     this.radius,
     this.padding,
     this.itemShimmer = 1,
+    this.spaceItemBottom,
     super.key,
   });
 
@@ -39,7 +41,7 @@ class _ShimmerLoadingWidgetState extends State<ShimmerLoadingWidget> {
           children: List.generate(
             widget.itemShimmer,
             (index) => Padding(
-              padding: EdgeInsets.only(bottom: 8.0.h),
+              padding: EdgeInsets.only(bottom: widget.spaceItemBottom ?? 8.0.h),
               child: Shimmer.fromColors(
                 enabled: true,
                 baseColor: Colors.grey.shade300,
