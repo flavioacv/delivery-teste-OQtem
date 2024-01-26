@@ -3,7 +3,7 @@ import 'package:teste_delivery/app/modules/order/data/mocks/json_data.dart';
 import 'package:teste_delivery/app/modules/order/interactor/models/order_model.dart';
 import 'package:teste_delivery/app/modules/order/interactor/state/order_state.dart';
 
-import 'sign_in_service.dart';
+import 'order_service.dart';
 
 class OrderServiceImpl implements OrderService {
   @override

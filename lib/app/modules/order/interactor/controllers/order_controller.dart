@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:teste_delivery/app/modules/order/data/services/sign_in_service.dart';
+import 'package:teste_delivery/app/modules/order/data/services/order_service.dart';
 import 'package:teste_delivery/app/modules/order/interactor/models/order_model.dart';
 import 'package:teste_delivery/app/modules/order/interactor/state/order_state.dart';
 
