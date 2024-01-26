@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:teste_delivery/app/core/themes/extensions/color_theme_extension.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
+import 'package:teste_delivery/app/modules/order/ui/widgets/dropdown_button_widget.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -173,22 +174,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
               shrinkWrap: true,
               itemCount: 5,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 180,
-                  margin: const EdgeInsets.only(bottom: 50),
-                  padding: const EdgeInsets.only(left: 45, right: 45, top: 60),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 4,
-                          blurRadius: 10)
-                    ],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const SizedBox(),
-                );
+                return buildTile();
               },
             );
           },
@@ -196,4 +182,102 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
       ),
     );
   }
+
+  Widget buildTile() {
+    return Container(
+      height: 180,
+      margin: const EdgeInsets.only(bottom: 50),
+      padding: const EdgeInsets.only(left: 45, right: 45, top: 50, bottom: 50),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              spreadRadius: 4,
+              blurRadius: 10)
+        ],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const TextWidget(
+                  'Mariana Oliveira',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    const TextWidget(
+                      'Status do pedido Entregar até 12:30 Recebido 1x X Burger ZYX + 1x Batata média',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: const TextWidget(
+                        'Ver detalhes',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundColor: context.appColors.grey,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const TextWidget(
+                  'Entregar até 12:30',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+                const SizedBox(
+                  width: 80,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextWidget(
+                        'Status do pedido',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      DropdownButtonWidget(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
+
