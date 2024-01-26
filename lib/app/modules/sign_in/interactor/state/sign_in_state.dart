@@ -1,4 +1,3 @@
-
 import 'package:teste_delivery/app/core/exception/app_exception.dart';
 import 'package:teste_delivery/app/core/value_objects/password.dart';
 
@@ -58,20 +57,20 @@ sealed class SignInState {
   }
 }
 
-class LoggedOutState extends SignInState {
+final class LoggedOutState extends SignInState {
   const LoggedOutState({
     required super.signInModel,
   });
 }
 
-class LoggedState extends SignInState {
+final class LoggedState extends SignInState {
   const LoggedState({
     required super.signInModel,
     super.isLoading = false,
   });
 }
 
-class SignInFailure extends SignInState {
+final class SignInFailure extends SignInState {
   const SignInFailure({
     required super.signInModel,
     required super.appException,
@@ -79,7 +78,7 @@ class SignInFailure extends SignInState {
   });
 }
 
-class SignInLoading extends SignInState {
+final class SignInLoading extends SignInState {
   const SignInLoading({
     required super.signInModel,
     required super.appException,

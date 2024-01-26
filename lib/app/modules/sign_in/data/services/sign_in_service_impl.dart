@@ -1,4 +1,5 @@
 import 'package:teste_delivery/app/core/exception/app_exception.dart';
+import 'package:teste_delivery/app/core/types/type.dart';
 import 'package:teste_delivery/app/modules/sign_in/interactor/exceptions/sign_in_exception.dart';
 import 'package:teste_delivery/app/modules/sign_in/interactor/models/sign_in_model.dart';
 import 'package:teste_delivery/app/modules/sign_in/interactor/state/sign_in_state.dart';
@@ -6,7 +7,7 @@ import 'package:teste_delivery/app/modules/sign_in/interactor/state/sign_in_stat
 import 'sign_in_service.dart';
 
 class SignInServiceImpl implements SignInService {
-  Map<String, String> dados = {
+  Json dados = {
     "user": "teste@com.br",
     "pass": "123123123",
   };
