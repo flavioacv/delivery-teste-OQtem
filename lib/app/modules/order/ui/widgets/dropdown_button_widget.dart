@@ -31,6 +31,7 @@ class _DropdownButtonWidgetState extends State<DropdownButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
+      focusColor: Colors.transparent,
       value: dropdownValue,
       icon: const Icon(Icons.keyboard_arrow_down_rounded),
       //elevation: 16,
