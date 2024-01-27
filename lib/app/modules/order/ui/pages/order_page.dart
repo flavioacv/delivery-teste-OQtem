@@ -114,7 +114,10 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
             ),
             width: context.screenSize.width * 0.5,
             child: isDetails
-                ? OrderDetailsWidget(drawerKey: scaffoldKey)
+                ? OrderDetailsWidget(
+                    drawerKey: scaffoldKey,
+                    order: widget.orderController.orderSelected.value,
+                  )
                 : ChatWidget(drawerKey: scaffoldKey),
           ),
           floatingActionButton: Padding(
@@ -339,7 +342,9 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                     ),
                     InkWell(
                       onTap: () {
+                        widget.orderController.orderSelected.value = order;
                         isDetails = true;
+
                         setState(() {});
                         scaffoldKey.currentState!.openEndDrawer();
                       },

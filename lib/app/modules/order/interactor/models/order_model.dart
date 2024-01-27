@@ -58,6 +58,20 @@ class OrderModel {
     );
   }
 
+  factory OrderModel.empty() {
+    return OrderModel(
+      orderId: "",
+      orderIdStore: "",
+      clientName: "",
+      orderName: "",
+      status: "",
+      value: "",
+      deliveryDate: "",
+      address: "",
+      items: [],
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory OrderModel.fromJson(String source) =>

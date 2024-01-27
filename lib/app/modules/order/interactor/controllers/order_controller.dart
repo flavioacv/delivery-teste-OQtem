@@ -16,6 +16,7 @@ class OrderController implements Disposable {
       orders: [],
     ),
   );
+  final orderSelected = ValueNotifier<OrderModel>(OrderModel.empty());
 
   Future<void> getOrders() async {
     order.value = order.value.setLoading();
@@ -28,5 +29,6 @@ class OrderController implements Disposable {
   @override
   void dispose() {
     order.dispose();
+    orderSelected.dispose();
   }
 }

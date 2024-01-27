@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:teste_delivery/app/core/service/formatters/date_string_formatters.dart';
 import 'package:teste_delivery/app/core/themes/extensions/color_theme_extension.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
-import 'package:teste_delivery/app/modules/order/ui/widgets/dropdown_button_widget.dart';
+import 'package:teste_delivery/app/modules/order/interactor/models/order_model.dart';
 
 class OrderDetailsWidget extends StatefulWidget {
   final GlobalKey<ScaffoldState> drawerKey;
-  const OrderDetailsWidget({super.key, required this.drawerKey});
+  final OrderModel order;
+
+  const OrderDetailsWidget({
+    super.key,
+    required this.drawerKey,
+    required this.order,
+  });
 
   @override
   State<OrderDetailsWidget> createState() => _OrderDetailsWidgetState();
@@ -39,24 +46,24 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           const SizedBox(
             height: 60,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 15, right: 30),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWidget(
+                    const TextWidget(
                       'Pedido',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextWidget(
-                      '#45990',
+                      widget.order.orderId,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
@@ -65,16 +72,16 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWidget(
+                    const TextWidget(
                       'Valor do pedido',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextWidget(
-                      'R\$45,90',
+                      widget.order.value,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
@@ -83,16 +90,17 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWidget(
+                    const TextWidget(
                       'Entregar até',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextWidget(
-                      '12:30',
+                      DateStringFormatters.formatHours(
+                          widget.order.deliveryDate),
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
@@ -116,37 +124,37 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWidget(
+                    const TextWidget(
                       'Cliente',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextWidget(
-                      'Mariana Oliveira',
+                      widget.order.clientName,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
                   ],
                 ),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWidget(
+                    const TextWidget(
                       'Pedidos na loja',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextWidget(
-                      '12',
+                      widget.order.orderIdStore,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
@@ -160,12 +168,13 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                     ),
-                    DropdownButtonWidget(
-                      value: "Recebido",
-                      onChanged: (value) {
-                        //order.status = value;
-                        // setState(() {});
-                      },
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextWidget(
+                      widget.order.status,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
                     ),
                   ],
                 ),
@@ -182,24 +191,24 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           const SizedBox(
             height: 30,
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 15, right: 30),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextWidget(
+                    const TextWidget(
                       'Endereço',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextWidget(
-                      'Rua Um Dois Três, 123 - Guarujá, SP - CEP 111410-200',
+                      widget.order.address,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
@@ -238,11 +247,11 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         height: 20,
                       ),
                       ListView.builder(
-                        itemCount: 2,
+                        itemCount: widget.order.items.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return const TextWidget(
-                            '1x Banco',
+                          return TextWidget(
+                            'x${widget.order.items[index].number} ${widget.order.items[index].name}',
                             fontSize: 20,
                             fontWeight: FontWeight.w400,
                           );
