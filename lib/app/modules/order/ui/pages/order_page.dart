@@ -10,9 +10,11 @@ import 'package:teste_delivery/app/core/themes/extensions/responsive_extension.d
 import 'package:teste_delivery/app/core/widgets/shimmer_loading_widget.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
 import 'package:teste_delivery/app/modules/order/interactor/controllers/order_controller.dart';
+import 'package:teste_delivery/app/modules/order/interactor/models/item_order_model.dart';
 import 'package:teste_delivery/app/modules/order/interactor/models/order_model.dart';
 import 'package:teste_delivery/app/modules/order/interactor/state/order_state.dart';
 import 'package:teste_delivery/app/modules/order/ui/widgets/chat_widget.dart';
+import 'package:teste_delivery/app/modules/order/ui/widgets/dialog_new_order_widget.dart';
 import 'package:teste_delivery/app/modules/order/ui/widgets/dropdown_button_widget.dart';
 import 'package:teste_delivery/app/modules/order/ui/widgets/order_details_widget.dart';
 
@@ -37,6 +39,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool isDetails = false;
   late Timer timer;
+
   final List<Tab> myTabs = list
       .map((e) => Tab(
             child: TextWidget(
@@ -46,6 +49,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
             ),
           ))
       .toList();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -72,204 +76,27 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext cxt) {
-        return Align(
-          alignment: Alignment.center,
-          child: Material(
-            color: Colors.transparent,
-            child: Container(
-              height: 550,
-              width: 480,
-              padding: const EdgeInsets.only(top: 20, left: 25, right: 25),
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          NavigationService.pop();
-                        },
-                        icon: const Icon(Icons.close),
-                      ),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      const TextWidget(
-                        'Novo pedido',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15, right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextWidget(
-                              'Pedido',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextWidget(
-                              '#45990',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextWidget(
-                              'Valor do pedido',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextWidget(
-                              'R\$45,90',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextWidget(
-                              'Entregar até',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextWidget(
-                              '12:30',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Divider(
-                    color: context.appColors.grey,
-                    height: 0.2,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 140,
-                          width: context.screenSize.width * 0.1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const TextWidget(
-                                'Itens do pedido',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              ListView.builder(
-                                itemCount: 2,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return const TextWidget(
-                                    '1x Banco',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400,
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: context.screenSize.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        NavigationService.pop();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: context.appColors.orangeDark,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12), // <-- Radius
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 20),
-                        child: TextWidget(
-                          'Aceitar',
-                          colorText: context.appColors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    width: context.screenSize.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        NavigationService.pop();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade300,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12), // <-- Radius
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 20),
-                        child: TextWidget(
-                          'Recusar',
-                          colorText: context.appColors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  )
+        return DialogNewOrder(onPressed: () {
+          setState(() {
+            widget.orderController.order.value.orders.add(
+              OrderModel(
+                orderId: '89232',
+                orderIdStore: "12",
+                clientName: "Joana Tesla",
+                orderName: "1x X Burger ZYX + 1x Batata média ",
+                status: "Recebido",
+                value: "R\$45,90",
+                deliveryDate: "2024-02-26 09:00",
+                address: 'AV Marginal Coelho, 3829 - Dourados - MS',
+                items: [
+                  ItemOrderModel('Refri', '1'),
+                  ItemOrderModel('Bacon', '1'),
                 ],
               ),
-            ),
-          ),
-        );
+            );
+          });
+          NavigationService.pop();
+        });
       },
     );
   }

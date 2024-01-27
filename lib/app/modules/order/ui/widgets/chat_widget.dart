@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teste_delivery/app/core/themes/extensions/color_theme_extension.dart';
-import 'package:teste_delivery/app/core/themes/extensions/responsive_extension.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
 
 class ChatWidget extends StatefulWidget {
@@ -54,7 +53,7 @@ class _ChatWidgetState extends State<ChatWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: context.screenSize.height - 105.h,
+                height: context.screenSize.height * 0.86,
                 width: context.screenSize.width * 0.25,
                 decoration: BoxDecoration(
                   border: Border(
@@ -121,7 +120,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                 ),
               ),
               Container(
-                height: context.screenSize.height - 105.h,
+                height: context.screenSize.height * 0.86,
                 width: context.screenSize.width * 0.25,
                 decoration: BoxDecoration(
                   border: Border(
