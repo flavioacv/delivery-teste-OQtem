@@ -9,7 +9,9 @@ import 'package:teste_delivery/app/core/widgets/text_widget.dart';
 import 'package:teste_delivery/app/modules/order/interactor/controllers/order_controller.dart';
 import 'package:teste_delivery/app/modules/order/interactor/models/order_model.dart';
 import 'package:teste_delivery/app/modules/order/interactor/state/order_state.dart';
+import 'package:teste_delivery/app/modules/order/ui/widgets/chat_widget.dart';
 import 'package:teste_delivery/app/modules/order/ui/widgets/dropdown_button_widget.dart';
+import 'package:teste_delivery/app/modules/order/ui/widgets/order_details_widget.dart';
 
 class OrderPage extends StatefulWidget {
   final OrderController orderController;
@@ -29,6 +31,8 @@ const List<String> list = <String>[
 
 class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   TabController? controller;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isDetails = false;
   final List<Tab> myTabs = list
       .map((e) => Tab(
             child: TextWidget(
@@ -60,49 +64,64 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: widget.orderController.order,
-        builder: (context, state, __) {
-          return Scaffold(
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(bottom: 20, right: 8),
-              child: InkWell(
-                onTap: () async {},
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: context.appColors.grey,
-                      child: SvgPicture.asset(
-                        'assets/icons/message-circle.svg',
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: context.appColors.white,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+      valueListenable: widget.orderController.order,
+      builder: (context, state, __) {
+        return Scaffold(
+          key: scaffoldKey,
+          endDrawer: Drawer(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.zero),
             ),
-            body: Container(
-              color: context.appColors.whiteOrange,
-              width: context.screenSize.width,
-              height: context.screenSize.height,
-              child: Column(
+            width: context.screenSize.width * 0.5,
+            child: isDetails
+                ? OrderDetailsWidget(drawerKey: scaffoldKey)
+                : ChatWidget(drawerKey: scaffoldKey),
+          ),
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 20, right: 8),
+            child: InkWell(
+              onTap: () async {
+                isDetails = false;
+                setState(() {});
+                scaffoldKey.currentState!.openEndDrawer();
+              },
+              child: Stack(
                 children: [
-                  buildHeader(state),
-                  buildBody(state),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: context.appColors.grey,
+                    child: SvgPicture.asset(
+                      'assets/icons/message-circle.svg',
+                      width: 30,
+                      height: 30,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundColor: context.appColors.white,
+                    ),
+                  )
                 ],
               ),
             ),
-          );
-        });
+          ),
+          body: Container(
+            color: context.appColors.whiteOrange,
+            width: context.screenSize.width,
+            height: context.screenSize.height,
+            child: Column(
+              children: [
+                buildHeader(state),
+                buildBody(state),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget buildHeader(OrderState state) {
@@ -279,7 +298,11 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                       width: 30,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        isDetails = true;
+                        setState(() {});
+                        scaffoldKey.currentState!.openEndDrawer();
+                      },
                       child: const TextWidget(
                         'Ver detalhes',
                         fontSize: 16,

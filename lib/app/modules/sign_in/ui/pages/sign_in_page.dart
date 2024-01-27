@@ -98,7 +98,7 @@ class _SignInPageState extends State<SignInPage> {
                         width: 427,
                         height: 359,
                         padding:
-                            const EdgeInsets.only(left: 45, right: 45, top: 60),
+                            const EdgeInsets.only(left: 45, right: 45, top: 50),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -114,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
                             children: [
                               SizedBox(
                                 //    color: Colors.red,
-                                height: 40,
+                                height: 60,
                                 child: Center(
                                   child: TextFormField(
                                     textAlign: TextAlign.start,
@@ -137,16 +137,15 @@ class _SignInPageState extends State<SignInPage> {
                                       color: context.appColors.grey,
                                     ),
                                     decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.only(
-                                        bottom: 23,
-                                      ),
+                                      // contentPadding: const EdgeInsets.only(
+                                      //   bottom: 23,
+                                      // ),
                                       prefixIcon: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 20),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: CircleAvatar(
                                           backgroundColor:
                                               context.appColors.grey,
-                                          radius: 10,
+                                          radius: 1,
                                         ),
                                       ),
                                       hintText: SignInLocales.email,
@@ -167,11 +166,11 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 40,
+                                height: 10,
                               ),
                               SizedBox(
                                 //    color: Colors.red,
-                                height: 40,
+                                height: 60,
                                 child: Center(
                                   child: TextFormField(
                                     textAlign: TextAlign.start,
@@ -195,16 +194,15 @@ class _SignInPageState extends State<SignInPage> {
                                       color: context.appColors.grey,
                                     ),
                                     decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.only(
-                                        bottom: 23,
-                                      ),
+                                      // contentPadding: const EdgeInsets.only(
+                                      //   bottom: 23,
+                                      // ),
                                       prefixIcon: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 20),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: CircleAvatar(
                                           backgroundColor:
                                               context.appColors.grey,
-                                          radius: 10,
+                                          radius: 1,
                                         ),
                                       ),
                                       hintText: SignInLocales.pass,
