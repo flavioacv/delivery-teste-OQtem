@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:teste_delivery/app/core/constants/locales/order_locales.dart';
 import 'package:teste_delivery/app/core/navigation/navigation_service.dart';
 import 'package:teste_delivery/app/core/service/formatters/date_string_formatters.dart';
 import 'package:teste_delivery/app/core/service/snack_bar/snack_bar.dart';
@@ -333,7 +334,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                 Row(
                   children: [
                     TextWidget(
-                      'Status do pedido Entregar até ${DateStringFormatters.formatHours(order.deliveryDate)} ${order.status} ${order.orderName}',
+                      '${OrderLocales.statusOrderEnd} ${DateStringFormatters.formatHours(order.deliveryDate)} ${order.status} ${order.orderName}',
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
@@ -349,7 +350,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                         scaffoldKey.currentState!.openEndDrawer();
                       },
                       child: const TextWidget(
-                        'Ver detalhes',
+                        OrderLocales.details,
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         decoration: TextDecoration.underline,
@@ -372,7 +373,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                   width: 10,
                 ),
                 TextWidget(
-                  'Entregar até ${DateStringFormatters.formatHours(order.deliveryDate)}',
+                  '${OrderLocales.orderEnd} ${DateStringFormatters.formatHours(order.deliveryDate)}',
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -385,7 +386,7 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const TextWidget(
-                        'Status do pedido',
+                        OrderLocales.statusOrder,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),

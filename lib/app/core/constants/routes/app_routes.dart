@@ -1,4 +1,4 @@
 class AppRoutes {
   static const String initialRoute = '/';
-  static const String orderRoute = '/order';
+  static const String orderRoute = '/orders';
 }

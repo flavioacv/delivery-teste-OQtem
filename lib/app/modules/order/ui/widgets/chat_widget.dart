@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teste_delivery/app/core/constants/locales/order_locales.dart';
 import 'package:teste_delivery/app/core/themes/extensions/color_theme_extension.dart';
 import 'package:teste_delivery/app/core/widgets/text_widget.dart';
 
@@ -38,7 +39,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                   width: 40,
                 ),
                 const TextWidget(
-                  'Conversas',
+                  OrderLocales.chat,
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                 )
