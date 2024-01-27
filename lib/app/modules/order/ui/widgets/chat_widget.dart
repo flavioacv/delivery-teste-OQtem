@@ -23,23 +23,28 @@ class _ChatWidgetState extends State<ChatWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  widget.drawerKey.currentState!.closeEndDrawer();
-                },
-                icon: const Icon(Icons.close),
-              ),
-              const SizedBox(
-                width: 40,
-              ),
-              const TextWidget(
-                'Conversas',
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-              )
-            ],
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 25,
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    widget.drawerKey.currentState!.closeEndDrawer();
+                  },
+                  icon: const Icon(Icons.close),
+                ),
+                const SizedBox(
+                  width: 40,
+                ),
+                const TextWidget(
+                  'Conversas',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                )
+              ],
+            ),
           ),
           const SizedBox(
             height: 30,
@@ -264,8 +269,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                       child: TextFormField(
                         textAlign: TextAlign.start,
                         cursorColor: context.appColors.grey,
-                        obscureText: true,
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         style: GoogleFonts.roboto(
                           fontSize: 16,
